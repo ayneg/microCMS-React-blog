@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from "react";
+import { client } from "./libs/client";
 import './App.css';
 
 function App() {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    client.get({ endpoint: "blog" })
+      .then((res) => {
+        console.log(res); //レスポンス確認
+        setData(res);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  if (!data || !data.contents) { //dataもしくはdata.contentsが未定義の場合 Loading...表示
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {data.contents.map((content) => (
+        <div key={content.id}>
+          <h2>{content.title}</h2>
+        </div>
+      ))}
     </div>
   );
 }
