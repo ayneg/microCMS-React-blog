@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { client } from "./libs/client";
 import { PostDetail } from "./PostDetail";
-import './App.css';
+import './App.scss';
 
 function App() {
   const [data, setData] = useState();
@@ -18,21 +18,26 @@ function App() {
   }
 
   return (
-    <Router>
-      <Link to="/">ホームに戻る</Link>
-      <Routes>
-        <Route path="/" element={
-          <div>
-            {data.contents.map((content) => (
-              <div key={content.id}>
-                <Link to={`/posts/${content.id}`}><h2>{content.title}</h2></Link>
-              </div>
-            ))}
-          </div>
-        } />
-        <Route path="/posts/:id" element={<PostDetail />} />
-      </Routes>
-    </Router>
+    <main className="main">
+      <h1 className="title">おれのブログ</h1>
+      <Router>
+        <Link to="/">ホームに戻る</Link>
+        <Routes>
+          <Route path="/" element={
+            <div className="articles">
+              {data.contents.map((content) => (
+                <div key={content.id}>
+                  <h2 className="articles_title">
+                    <Link to={`/posts/${content.id}`}>{content.title}</Link>
+                  </h2>
+                </div>
+              ))}
+            </div>
+          } />
+          <Route path="/posts/:id" element={<PostDetail />} />
+        </Routes>
+      </Router>
+    </main>
   );
 }
 

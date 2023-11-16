@@ -1,0 +1,18 @@
+body {
+  background-color: black;
+  color: #ddd;
+}
+
+.title {
+  color: #ddd;
+}
+
+.articles {
+  &_title a {
+    color: #ddd;
+    text-decoration: none;
+    &:visited {
+      color: #ddd;
+    }
+  }
+}
