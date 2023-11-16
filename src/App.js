@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { client } from "./libs/client";
+import { PostDetail } from "./PostDetail";
 import './App.css';
 
 function App() {
@@ -7,10 +9,7 @@ function App() {
 
   useEffect(() => {
     client.get({ endpoint: "blog" })
-      .then((res) => {
-        console.log(res); //レスポンス確認
-        setData(res);
-      })
+      .then((res) => { setData(res); })
       .catch((err) => console.error(err));
   }, []);
 
@@ -19,13 +18,21 @@ function App() {
   }
 
   return (
-    <div className="App">
-      {data.contents.map((content) => (
-        <div key={content.id}>
-          <h2>{content.title}</h2>
-        </div>
-      ))}
-    </div>
+    <Router>
+      <Link to="/">ホームに戻る</Link>      
+      <Routes>
+        <Route path="/" element={
+          <div>
+          {data.contents.map((content) => (
+            <div key={content.id}>
+            <Link to={`/posts/${content.id}`}><h2>{content.title}</h2></Link>
+            </div>
+            ))}
+          </div>
+          } />
+        <Route path="/posts/:id" element={<PostDetail />} />
+      </Routes>
+    </Router>
   );
 }
 
