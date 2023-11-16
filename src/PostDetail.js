@@ -6,10 +6,10 @@ export const PostDetail = () => {
     const [post, setPost] = useState();
     const { id } = useParams();
 
-    useEffect(() =>{
-        client.get({ endpoint: "blog", contentId: id})
-        .then((res) => setPost(res))
-        .catch((err) => console.error(err));
+    useEffect(() => {
+        client.get({ endpoint: "blog", contentId: id })
+            .then((res) => setPost(res))
+            .catch((err) => console.error(err));
     }, []);
 
     if (!post) return <div>Loading....</div>;

@@ -19,17 +19,17 @@ function App() {
 
   return (
     <Router>
-      <Link to="/">ホームに戻る</Link>      
+      <Link to="/">ホームに戻る</Link>
       <Routes>
         <Route path="/" element={
           <div>
-          {data.contents.map((content) => (
-            <div key={content.id}>
-            <Link to={`/posts/${content.id}`}><h2>{content.title}</h2></Link>
-            </div>
+            {data.contents.map((content) => (
+              <div key={content.id}>
+                <Link to={`/posts/${content.id}`}><h2>{content.title}</h2></Link>
+              </div>
             ))}
           </div>
-          } />
+        } />
         <Route path="/posts/:id" element={<PostDetail />} />
       </Routes>
     </Router>
